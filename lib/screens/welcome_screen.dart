@@ -19,7 +19,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     super.initState();
 
     controller=AnimationController(
-      duration: Duration(seconds: 1),
+      duration: Duration(milliseconds:600 ),
       vsync: this,
     );
 
