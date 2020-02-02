@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-class ResgistrationScreen extends StatefulWidget {
+class RegistrationScreen extends StatefulWidget {
+
+  static String id= '/regististration_screen';
+
   @override
-  _ResgistrationScreenState createState() => _ResgistrationScreenState();
+  _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
-class _ResgistrationScreenState extends State<ResgistrationScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
