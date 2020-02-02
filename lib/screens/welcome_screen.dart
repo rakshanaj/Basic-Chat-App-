@@ -1,6 +1,7 @@
 import 'package:basic_chat_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'registration_screen.dart';
+import 'package:basic_chat_app/components/rounded_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
 
@@ -67,44 +68,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
           SizedBox(
             height: 30.0,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Material(
-              elevation: 5.0,
-              color: Colors.brown.shade500,
-              borderRadius: BorderRadius.circular(30.0),
-              child: MaterialButton(
-                onPressed: (){
-                  Navigator.pushNamed(context, LoginScreen.id);
-                },
-                minWidth: 200.0,
-                height: 42.0,
-                child: Text(
-                  'Log in',
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Material(
-              elevation: 5.0,
-              borderRadius: BorderRadius.circular(30.0),
-              color: Colors.brown.shade900,
-              child: MaterialButton(
-                onPressed: (){
-                  Navigator.pushNamed(context, RegistrationScreen.id);
-                },
-                minWidth: 200.0,
-                height: 42.0,
-                child: Text(
-                  'Register',
-                ),
-              ),
-            ),
-          ),
+          RoundedButton(color: Colors.brown.shade900,btn: 'Login',func:LoginScreen.id),
+          RoundedButton(color: Colors.brown.shade900,btn: 'Register',func:RegistrationScreen.id),
         ],
       ),
     );
   }
 }
+
