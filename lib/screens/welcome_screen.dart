@@ -21,21 +21,29 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Container(
-                child: Image.asset('images/pawprint.png'),
-                height: 60.0,
+              Hero(
+                tag: 'logo',
+                child: Container(
+                  child: Image.asset('images/pawprint.png'),
+                  height: 45.0,
+                ),
               ),
-
+              SizedBox(
+                width: 10.0,
+              ),
+              Text(
+                'ZoeyChats',
+                style: TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
             ],
           ),
+
           SizedBox(
-            height: 20.0,
-          ),
-          Text(
-            'ZoeyChats',
-          ),
-          SizedBox(
-            height: 20.0,
+            height: 30.0,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

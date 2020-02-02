@@ -16,6 +16,17 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            
+            Hero(
+              tag: 'logo',
+              child: Container(
+                child: Image.asset('images/pawprint.png'),
+                height: 100.0,
+              ),
+            ),
+            SizedBox(
+              height: 30.0,
+            ),
             Container(
               width: 350.0,
               child: TextField(
