@@ -89,23 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 24.0,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Material(
-                elevation: 5.0,
-                color: Colors.brown.shade900,
-                borderRadius: BorderRadius.circular(30.0),
-                child: MaterialButton(onPressed: (){
-
-                },
-                  child: Text(
-                      'Log in'
-                  ),
-                  minWidth: 200.0,
-                ),
-
-              ),
-            ),
+            RoundedButton(color: Colors.brown.shade900,btn: 'Login',func:LoginScreen.id),
           ],
         ),
       ),
