@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:basic_chat_app/components/rounded_button.dart';
 import 'package:basic_chat_app/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id= '/login_screen';
@@ -10,6 +11,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  FirebaseUser user;
+  String email,password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.emailAddress, //gives option of @ in keyboard
                 textAlign: TextAlign.center,
                 onChanged: (value){
-                  //put to fb
+                  user.sendEmailVerification()
                 },
                 decoration: kTextFieldDecoration.copyWith(
                     hintText: "Enter email"
