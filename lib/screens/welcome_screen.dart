@@ -68,7 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
           SizedBox(
             height: 30.0,
           ),
-          RoundedButton(color: Colors.brown.shade900,btn: 'Login',func:LoginScreen.id),
+          RoundedButton(color: Colors.brown.shade600,btn: 'Login',func:LoginScreen.id),
           RoundedButton(color: Colors.brown.shade900,btn: 'Register',func:RegistrationScreen.id),
         ],
       ),

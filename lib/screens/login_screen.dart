@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:basic_chat_app/components/rounded_button.dart';
+import 'package:basic_chat_app/constants.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
               tag: 'logo',
               child: Container(
                 child: Image.asset('images/pawprint.png'),
-                height: 100.0,
+                height: 130.0,
               ),
             ),
             SizedBox(
@@ -35,23 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 onChanged: (value){
                   //put to fb
                 },
-                decoration: InputDecoration(
-                  hintText: 'Enter email',
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
-                  contentPadding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 20.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                  enabledBorder:OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown.shade200,width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown.shade200,width: 2.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
+                decoration: kTextFieldDecoration.copyWith(
+                    hintText: "Enter email"
                 ),
               ),
             ),
@@ -66,30 +52,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   //put to fb
                 },
 
-                decoration: InputDecoration(
-                  hintText: 'Enter pwd',
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
-                  contentPadding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 20.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                  enabledBorder:OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown.shade200,width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown.shade200,width: 2.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
+                decoration: kTextFieldDecoration.copyWith(
+                    hintText: "Enter password"
                 ),
               ),
             ),
             SizedBox(
               height: 24.0,
             ),
-            RoundedButton(color: Colors.brown.shade900,btn: 'Login',func:LoginScreen.id),
+            RoundedButton(color: Colors.brown.shade700,btn: 'Login',func:LoginScreen.id),
+            RoundedButton(color: Colors.brown.shade700,btn: 'Forgot password',func:LoginScreen.id ,),
           ],
         ),
       ),

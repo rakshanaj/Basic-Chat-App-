@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:basic_chat_app/components/rounded_button.dart';
+import 'package:basic_chat_app/constants.dart';
 
 class RegistrationScreen extends StatefulWidget {
 
@@ -34,23 +35,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onChanged: (value){
                   //put to fb
                 },
-                decoration: InputDecoration(
-                  hintText: 'Enter email',
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
-                  contentPadding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 20.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                  enabledBorder:OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown.shade200,width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.brown.shade200,width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                    ),
+                decoration: kTextFieldDecoration.copyWith(
+                  hintText: "Enter email"
                 ),
               ),
             ),
@@ -65,23 +51,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   //put to fb
                 },
 
-                decoration: InputDecoration(
-                  hintText: 'Enter pwd',
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
-                  contentPadding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 20.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                  enabledBorder:OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown.shade200,width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown.shade200,width: 2.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
+                decoration: kTextFieldDecoration.copyWith(
+                    hintText: "Enter password"
                 ),
               ),
             ),
