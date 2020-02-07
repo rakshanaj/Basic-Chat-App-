@@ -1,5 +1,8 @@
+import 'package:basic_chat_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ChatScreen extends StatefulWidget {
 
   static String id= '/chat_screen';
@@ -12,6 +15,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   final _auth=FirebaseAuth.instance;
   FirebaseUser loggedInUser;
+
+  String msgText;
 
   void getCurrentUser() async{
     try {
@@ -42,6 +47,9 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: Icon(Icons.close),
             onPressed: (){
               //logout
+              _auth.signOut();
+              print('logged out');
+              Navigator.pushNamed(context, LoginScreen.id);
             },
           ),
         ],
