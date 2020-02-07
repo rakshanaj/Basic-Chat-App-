@@ -1,4 +1,11 @@
+
+import 'chat_screen.dart';
+import 'package:basic_chat_app/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:basic_chat_app/components/rounded_button.dart';
+import 'package:basic_chat_app/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id= '/login_screen';
@@ -8,89 +15,90 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  FirebaseAuth _auth=FirebaseAuth.instance;
+  String email,password;
+  bool showSpinner=false;
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body:Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: 350.0,
-              child: TextField(
-                onChanged: (value){
-                  //put to fb
-                },
-                decoration: InputDecoration(
-                  hintText: 'Enter email',
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
-                  contentPadding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 20.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                  enabledBorder:OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown.shade200,width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown.shade200,width: 2.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+    return ModalProgressHUD(
+      inAsyncCall: showSpinner,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body:Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+
+              Hero(
+                tag: 'logo',
+                child: Container(
+                  child: Image.asset('images/pawprint.png'),
+                  height: 130.0,
+                ),
+              ),
+              SizedBox(
+                height: 30.0,
+              ),
+              Container(
+                width: 350.0,
+                child: TextField(
+                  keyboardType: TextInputType.emailAddress, //gives option of @ in keyboard
+                  textAlign: TextAlign.center,
+                  onChanged: (value){
+                    email=value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: "Enter email"
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              width: 350.0,
-              child: TextField(
+              SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                width: 350.0,
+                child: TextField(
+                  obscureText: true,
+                  textAlign: TextAlign.center,
+                  onChanged: (value){
+                    password=value;
+                  },
 
-                onChanged: (value){
-                  //put to fb
-                },
-
-                decoration: InputDecoration(
-                  hintText: 'Enter pwd',
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
-                  contentPadding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 20.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                  enabledBorder:OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown.shade200,width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown.shade200,width: 2.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: "Enter password"
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 24.0,
-            ),
-            Material(
-              elevation: 5.0,
-              color: Colors.brown.shade700,
-              borderRadius: BorderRadius.circular(30.0),
-              child: MaterialButton(onPressed: (){
-
-              },
-                child: Text(
-                    'Log in'
-                ),
-                minWidth: 200.0,
+              SizedBox(
+                height: 24.0,
               ),
+              RoundedButton(color: Colors.brown.shade700,btn: 'Login',onPressed: () async {
+                setState(() {
+                  showSpinner=true;
+                });
+                try {
+                  final user = await _auth.signInWithEmailAndPassword(
+                      email: email, password: password);
 
-            ),
-          ],
+                  if (user != null) {
+                    Navigator.pushNamed(context, ChatScreen.id);
+                  }
+                  setState(() {
+                    showSpinner=false;
+                  });
+                }
+                catch(e){
+                  print('check credential and try again');
+                }
+                },),
+              RoundedButton(color: Colors.brown.shade700,btn: 'Forgot password',onPressed: (){
+                Navigator.pushNamed(context, LoginScreen.id);
+              },),
+            ],
+          ),
         ),
       ),
     );
