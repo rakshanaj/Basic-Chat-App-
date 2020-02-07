@@ -32,6 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               width: 350.0,
               child: TextField(
+                keyboardType: TextInputType.emailAddress, //gives option of @ in keyboard
+                textAlign: TextAlign.center,
                 onChanged: (value){
                   //put to fb
                 },
@@ -46,7 +48,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               width: 350.0,
               child: TextField(
-
+                obscureText: true,
+                textAlign: TextAlign.center,
                 onChanged: (value){
                   //put to fb
                 },
@@ -59,8 +62,13 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 24.0,
             ),
-            RoundedButton(color: Colors.brown.shade700,btn: 'Login',func:LoginScreen.id),
-            RoundedButton(color: Colors.brown.shade700,btn: 'Forgot password',func:LoginScreen.id ,),
+            RoundedButton(color: Colors.brown.shade700,btn: 'Login',onPressed: (){
+              Navigator.pushNamed(context, LoginScreen.id);
+
+            },),
+            RoundedButton(color: Colors.brown.shade700,btn: 'Forgot password',onPressed: (){
+              Navigator.pushNamed(context, LoginScreen.id);
+            },),
           ],
         ),
       ),

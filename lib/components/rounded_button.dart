@@ -4,9 +4,9 @@ class RoundedButton extends StatelessWidget {
 
   Color color;
   String btn;
-  var func;
+  var onPressed;
 
-  RoundedButton({this.color,this.btn,this.func});
+  RoundedButton({this.color,this.btn,this.onPressed});
 
 
   @override
@@ -18,9 +18,7 @@ class RoundedButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0),
         color: color,
         child: MaterialButton(
-          onPressed: (){
-            Navigator.pushNamed(context, func);
-          },
+          onPressed: onPressed,
           minWidth: 200.0,
           height: 42.0,
           child: Text(
@@ -34,3 +32,4 @@ class RoundedButton extends StatelessWidget {
     );
   }
 }
+
