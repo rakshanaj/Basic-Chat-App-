@@ -1,8 +1,8 @@
-import 'package:basic_chat_app/screens/chat_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:basic_chat_app/components/rounded_button.dart';
 import 'package:basic_chat_app/constants.dart';
+import 'package:basic_chat_app/screens/chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -29,11 +29,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Hero(
-                tag:'logo',
-                child: Container(
-                  child: Image.asset('images/pawprint.png'),
-                  height: 100.0,
+              Flexible(
+                child: Hero(
+                  tag: 'logo',
+                  child: Container(
+                    child: Image.asset('images/pawprint.png'),
+                    height: 100.0,
+                  ),
                 ),
               ),
               SizedBox(
