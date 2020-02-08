@@ -13,6 +13,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
 
+  final _firestore= Firestore.instance;
   final _auth=FirebaseAuth.instance;
   FirebaseUser loggedInUser;
 
@@ -28,6 +29,15 @@ class _ChatScreenState extends State<ChatScreen> {
     }
     catch(e){
       print('not able to get user that is logged in');
+    }
+  }
+
+  void messageStream() async{
+    print("getting messages from db");
+    await for(var ss in _firestore.collection('messages').snapshots()){
+      for(var msg in ss.documents){
+        print(msg.data);
+      }
     }
   }
 
@@ -47,9 +57,12 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: Icon(Icons.close),
             onPressed: (){
               //logout
-              _auth.signOut();
-              print('logged out');
-              Navigator.pushNamed(context, LoginScreen.id);
+//              _auth.signOut();
+//              print('logged out');
+
+            messageStream();
+
+              //Navigator.pushNamed(context, LoginScreen.id);
             },
           ),
         ],
@@ -60,6 +73,32 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+            StreamBuilder<QuerySnapshot>(
+                stream: _firestore.collection('messages').snapshots(),
+                builder: (context,snapshot){
+                  if(snapshot.hasData) {
+                    final messages=snapshot.data.documents;
+                    List<Text> msgWidgets=[];
+                    for(var msg in messages){
+                      final msgText=msg.data['text'];
+                      final msgSender=msg.data['sender'];
+
+                      final msgWidget=Text('$msgText from $msgSender');
+                      msgWidgets.add(msgWidget);
+                    }
+                    return Column(
+                      children: msgWidgets,
+                    );
+                  }
+                  else{
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.brown.shade400,
+                      ),
+                    );
+                  }
+                },
+            ),
             Container(
               decoration: BoxDecoration(
                 border: Border(
@@ -73,6 +112,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: TextField(
                       onChanged: (value){
                         //user input
+                        msgText=value;
                       },
                       decoration:InputDecoration(
                         contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -84,14 +124,21 @@ class _ChatScreenState extends State<ChatScreen> {
                   FlatButton(
                     onPressed: (){
                       //send
+                      _firestore.collection('messages').add({
+                        'text':msgText,
+                        'sender': loggedInUser.email,
+                      });
+                      print('sent msg and sender to fb');
                     },
                     child: Text('send'),
                   )
                 ],
               ),
             ),
+
           ],
         ),
+
       ),
     );
   }
