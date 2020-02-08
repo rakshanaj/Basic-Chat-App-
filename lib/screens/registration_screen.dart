@@ -95,6 +95,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       });
                     }
                     catch(e){
+                      print(e);
                       print('not able to add new user');
                     }
                   },

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+final _firestore= Firestore.instance;
+
 class ChatScreen extends StatefulWidget {
 
   static String id= '/chat_screen';
@@ -13,7 +15,8 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
 
-  final _firestore= Firestore.instance;
+  final msgTextControler=TextEditingController();
+
   final _auth=FirebaseAuth.instance;
   FirebaseUser loggedInUser;
 
@@ -73,32 +76,7 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            StreamBuilder<QuerySnapshot>(
-                stream: _firestore.collection('messages').snapshots(),
-                builder: (context,snapshot){
-                  if(snapshot.hasData) {
-                    final messages=snapshot.data.documents;
-                    List<Text> msgWidgets=[];
-                    for(var msg in messages){
-                      final msgText=msg.data['text'];
-                      final msgSender=msg.data['sender'];
-
-                      final msgWidget=Text('$msgText from $msgSender');
-                      msgWidgets.add(msgWidget);
-                    }
-                    return Column(
-                      children: msgWidgets,
-                    );
-                  }
-                  else{
-                    return Center(
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.brown.shade400,
-                      ),
-                    );
-                  }
-                },
-            ),
+            MessagesStream(),
             Container(
               decoration: BoxDecoration(
                 border: Border(
@@ -110,6 +88,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+                      controller: msgTextControler,
                       onChanged: (value){
                         //user input
                         msgText=value;
@@ -128,6 +107,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         'text':msgText,
                         'sender': loggedInUser.email,
                       });
+
+                      msgTextControler.clear();
+
                       print('sent msg and sender to fb');
                     },
                     child: Text('send'),
@@ -143,4 +125,81 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
+
+
+class MessagesStream extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _firestore.collection('messages').snapshots(),
+      builder: (context,snapshot){
+        if(snapshot.hasData) {
+          final messages=snapshot.data.documents;
+          List<MessageBubble> msgBubbleList=[];
+          for(var msg in messages){
+            final msgText=msg.data['text'];
+            final msgSender=msg.data['sender'];
+
+            final msgBubble= MessageBubble(sender: msgSender,text: msgText,);
+            msgBubbleList.add(msgBubble);
+          }
+          return Expanded(
+            child: ListView(
+              padding: EdgeInsets.all(10.0),
+              children: msgBubbleList,
+            ),
+          );
+        }
+        else{
+          return Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.brown.shade400,
+            ),
+          );
+        }
+      },
+    );
+  }
+}
+
+
+class MessageBubble extends StatelessWidget {
+
+  final String sender;
+  final String text;
+
+  MessageBubble({this.sender, this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Text(sender,
+          style: TextStyle(
+            fontSize: 12.0,
+            color: Colors.black54,
+            ),
+          ),
+          Material(
+            color: Colors.brown.shade300,
+            elevation: 5.0,
+            borderRadius: BorderRadius.circular(50.0),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 20.0),
+              child: Text('$text',
+                style: TextStyle(
+                  fontSize: 18.0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );;
+  }
+}
+
 
